@@ -1,0 +1,46 @@
+.multistep-header{
+    position: absolute;
+    width: 1098px;
+    padding-top: 47px;
+}
+
+
+.multistepHeader-wrapper{
+    margin: auto;
+}
+
+
+.multistepHeader-title{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #1A1A1A;
+}
+
+.multistepHeader-counter{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: right;
+    color: #1A1A1A;
+}
+
+
+.multistepHeader-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.multistepHeader-wrapper::after{
+    content: '';
+    background-color: #1A1A1A;
+    height: 1px;
+    width: 100%;
+    display: inline-block;
+    margin-top: 12px;
+}
