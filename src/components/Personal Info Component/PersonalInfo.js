@@ -87,6 +87,11 @@ function PersonalInfo({
                 trigger={trigger}
                 setValue={setValue}
                 register={register}
+                registerValue="aboutMe"
+                name="aboutMe"
+                placeholderValue="ზოგადი ინფო შენ შესახებ"
+                labelTitle="ჩემ შესახებ (არასავალდებულო)"
+                inputIndex={0}
               />
             </div>
 

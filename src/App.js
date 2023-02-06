@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useForm } from "react-hook-form";
 
 // import pages
 import Landing from "./pages/Landing Page/Landing";

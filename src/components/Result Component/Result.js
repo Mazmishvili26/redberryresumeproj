@@ -5,7 +5,9 @@ import "./Result.css";
 import email from "../../assets/email-icon.png";
 import phone from "../../assets/phone-icon.png";
 
-function Result({ step, resumeInfo }) {
+function Result({ step, resumeInfo, values, formId }) {
+  console.log(values);
+
   return (
     <section className="result-section">
       <div className={step === 2 ? "userInfo-wrapper" : null}>

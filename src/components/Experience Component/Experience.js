@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
 import "./Experience.css";
 
 // import components
 import MultistepHeader from "../../pages/Multistep Page/MultistepHeader";
 import Result from "../Result Component/Result";
-import InputBox from "../Personal Info Component/InputBox";
-import DateInput from "./DateInput";
+import ExperienceForm from "./ExperienceForm";
+import SecondStepResult from "./SecondStepResult";
 
 function Experience({
   step,
@@ -19,12 +20,13 @@ function Experience({
   setValues,
   trigger,
   setStep,
+  saveFormID,
+  setSaveFormID,
 }) {
-  const handleNext = (e) => {
-    e.preventDefault();
-    handleSubmit(() => {
-      setStep(step + 1);
-    })();
+  const [componentCount, setComponentCount] = useState(1);
+
+  const addForm = () => {
+    setComponentCount((count) => count + 1);
   };
 
   return (
@@ -32,53 +34,42 @@ function Experience({
       <div className="experience-container">
         <div className="left-side">
           <MultistepHeader step={step} />
-          <form onSubmit={handleNext} className="form-wrapper container">
-            <div className="userPosition-box">
-              <InputBox
-                labelTitle="თანამდებობა"
-                placeholderValue="დეველოპერი, დიზაინერი, ა.შ."
-                name="position"
-                registerValue="position"
-                inputWarningText="მინიმუმ 2 სიმბოლო"
-                watch={watch}
-                errors={errors}
-                register={register}
-                inputIndex={0}
-                setValue={setValue}
-                values={values}
-                setValues={setValues}
-                trigger={trigger}
-              />
-            </div>
 
-            <div className="employer-box">
-              <InputBox
-                labelTitle="დამსაქმებელი"
-                placeholderValue="დამსაქმებელი"
-                name="employer"
-                registerValue="employer"
-                inputWarningText="მინიმუმ 2 სიმბოლო"
-                watch={watch}
-                errors={errors}
-                register={register}
-                inputIndex={0}
-                setValue={setValue}
-                values={values}
-                setValues={setValues}
-                trigger={trigger}
-              />
-            </div>
+          {Array.from({ length: componentCount }, (_, i) => (
+            <ExperienceForm
+              watch={watch}
+              errors={errors}
+              register={register}
+              setValue={setValue}
+              values={values}
+              trigger={trigger}
+              setValues={setValues}
+              handleSubmit={handleSubmit}
+              setStep={setStep}
+              step={step}
+              key={i}
+              formId={i}
+              defaultValues={{ description: "" }}
+              setSaveFormID={setSaveFormID}
+              resumeInfo={resumeInfo}
+              saveFormID={saveFormID}
+            />
+          ))}
 
-            <div className="date-input-wrapper">
-              <DateInput register={register} inputIndex={0} />
-              {/* <DateInput register={register} /> */}
-            </div>
-
-            <button onClick={handleNext}>next</button>
-          </form>
+          <button type="button" className="add-more-btn" onClick={addForm}>
+            მეტი გამოცდილების დამატება
+          </button>
         </div>
         <div className="right-side">
-          <Result step={step} resumeInfo={resumeInfo} />
+          <Result
+            step={step}
+            resumeInfo={resumeInfo}
+            values={values}
+            saveFormID={saveFormID}
+          />
+          {Array.from({ length: componentCount }, (_, i) => (
+            <SecondStepResult values={values} formId={i} />
+          ))}
         </div>
       </div>
     </section>

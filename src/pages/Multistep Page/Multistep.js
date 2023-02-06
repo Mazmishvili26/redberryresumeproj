@@ -23,9 +23,6 @@ function Multistep() {
     fileUpload: Yup.string().required(),
     email: Yup.string().required().matches(emailRegex),
     phoneNumber: Yup.string().required().matches(phoneRegEx),
-    position: step === 2 && Yup.string().required().min(2),
-    employer: step === 2 && Yup.string().required().min(2),
-    startDate: step === 2 && Yup.string().required(),
   });
 
   const {
@@ -69,6 +66,7 @@ function Multistep() {
   }, [values]);
 
   const [resumeInfo, setResumeInfo] = useState([]);
+  const [saveFormID, setSaveFormID] = useState(null);
 
   useEffect(() => {
     setResumeInfo([
@@ -82,6 +80,7 @@ function Multistep() {
       { email: values.email },
       { phoneNumber: values.phoneNumber },
       { aboutMe: values.aboutMe },
+      { [`position-${saveFormID}`]: values[saveFormID] },
     ]);
   }, [
     values.firstName,
@@ -90,6 +89,7 @@ function Multistep() {
     values.email,
     values.phoneNumber,
     values.aboutMe,
+    values[saveFormID],
   ]);
 
   // localStorage configuration
@@ -124,6 +124,8 @@ function Multistep() {
           setValues={setValues}
           trigger={trigger}
           setStep={setStep}
+          saveFormID={saveFormID}
+          setSaveFormID={setSaveFormID}
         />
       )}
       {step === 3 && <Education />}
