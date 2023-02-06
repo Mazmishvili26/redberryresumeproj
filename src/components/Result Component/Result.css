@@ -1,0 +1,102 @@
+.result-section{
+    margin: 68px 75px 0px 80px;
+}
+
+
+/* firstStep-styles */
+
+.userInfo-Container{
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    background-color: gray;
+}
+
+.userName-title{
+    max-width: 432px;
+    width: 100%;
+    word-wrap: break-word;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 42px;
+    color: var(--title-color);
+}
+
+.contactInfo-container{
+    margin-top: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.email-box, .phoneNumber-box{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.email-title, .phone-title{
+    max-width: 402px;
+    width: 100%;
+    word-wrap: break-word;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: var(--off-black-color);
+}
+
+.aboutMe-container{
+    margin-top: 34px;
+}
+
+.about-title{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--title-color);
+}
+
+.aboutMe-text{
+    max-width: 432px;
+    width: 100%;
+    height: 72px;
+    word-wrap: break-word;
+    margin-top: 15px;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: var(--black-color);
+    height: auto;
+}
+
+
+.image-wrapper{
+    width: 246px;
+    height: 246px;
+    border-radius: 50%;
+}
+
+.image-wrapper img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.userInfo-wrapper::after{
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: var(--line-color);
+    display: inline-block;
+    margin-top: 19px;
+}

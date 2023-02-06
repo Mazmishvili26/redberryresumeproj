@@ -16,7 +16,7 @@
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;
-    color: #1A1A1A;
+    color: var(--off-black-color);
 }
 
 .multistepHeader-counter{
@@ -26,7 +26,7 @@
     font-size: 20px;
     line-height: 24px;
     text-align: right;
-    color: #1A1A1A;
+    color: var(--off-black-color);
 }
 
 
@@ -38,7 +38,7 @@
 
 .multistepHeader-wrapper::after{
     content: '';
-    background-color: #1A1A1A;
+    background-color: var(--off-black-color);
     height: 1px;
     width: 100%;
     display: inline-block;

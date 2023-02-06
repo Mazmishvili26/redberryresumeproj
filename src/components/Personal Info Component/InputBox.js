@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 
+// import assets
+import error from "../../assets/error-icon.png";
+import success from "../../assets/success-icon.png";
+
 function InputBox({
   watch,
   errors,
@@ -14,14 +18,18 @@ function InputBox({
   setValues,
   setValue,
   trigger,
+  // localStorageValue,
 }) {
   const [borderColors, setBorderColors] = useState(
-    Array(2).fill("1px solid #BCBCBC")
+    Array(5).fill("1px solid #BCBCBC")
   );
+
+  const [noError, setNoError] = useState(false);
 
   const inputValue = watch(registerValue);
 
   useEffect(() => {
+    setNoError(false);
     if (typeof inputValue === "string") {
       if (inputValue.length > 0) {
         if (errors[registerValue]) {
@@ -30,7 +38,9 @@ function InputBox({
             newBorderColors[inputIndex] = "1px solid #EF5050";
             return newBorderColors;
           });
-        } else {
+        }
+        if (!errors[registerValue]) {
+          setNoError(true);
           setBorderColors((prev) => {
             const newBorderColors = [...prev];
             newBorderColors[inputIndex] = "1px solid #98E37E";
@@ -41,7 +51,7 @@ function InputBox({
     }
 
     if (typeof inputValue === "string") {
-      if (inputValue.length === 0) {
+      if (inputValue.length === 0 && errors[registerValue]) {
         setBorderColors((prev) => {
           const newBorderColors = [...prev];
           newBorderColors[inputIndex] = "1px solid #EF5050";
@@ -49,11 +59,12 @@ function InputBox({
         });
       }
     }
-  }, [errors[registerValue], borderColors[inputIndex]]);
+  }, [errors[registerValue], borderColors[inputIndex], inputValue?.length]);
 
   // localStorage
+
   const takeValueFromStorage = localStorage.getItem("formValues");
-  const value = takeValueFromStorage
+  const localStorageValue = takeValueFromStorage
     ? JSON.parse(takeValueFromStorage)[registerValue]
     : "";
 
@@ -65,7 +76,7 @@ function InputBox({
   };
 
   useEffect(() => {
-    setValue(registerValue, value);
+    setValue(registerValue, localStorageValue);
   }, []);
 
   return (
@@ -82,6 +93,8 @@ function InputBox({
         {...register(registerValue)}
         onChange={handleChange}
       />
+      {errors[registerValue] && <img src={error} className="error-img" />}
+      {noError && <img src={success} className="success-img" />}
       <span className="input-warning">{inputWarningText}</span>
     </div>
   );

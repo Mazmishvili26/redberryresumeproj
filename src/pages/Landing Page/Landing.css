@@ -12,7 +12,7 @@
 
 .landing-header::after{
     content: '';
-    background-color: #1A1A1A;
+    background-color: var(--off-black-color);
     height: 1px;
     display: inline-block;
     width: 100%;
@@ -27,7 +27,7 @@
     max-width: 464px;
     width: 100%;
     height: 60px;
-    background: #1A1A1A;
+    background: var(--off-black-color);
     color: #FFFFFF;
     border-radius: 8px;
     font-family: 'Helvetica Neue';

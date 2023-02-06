@@ -61,3 +61,19 @@ table {
 	max-width: 798px;
 	width: 100%;
 }
+
+:root{
+	--dark-background : #F9F9F9;
+	--white-color: #FFFFFF;
+	--success-color : #98E37E;
+	--error-color:#EF5050;
+	--title-color:#F93B1D;
+	--black-color:#000000;
+	--placeholder-color: rgba(0, 0, 0, 0.6);
+	--off-black-color:#1A1A1A;
+	--light-gray-color:#909090;
+	--border-color:#BCBCBC;
+	--dark-blue:#0E80BF;
+	--btn-bg-color:#6B40E3;
+	--line-color : #C8C8C8;
+}

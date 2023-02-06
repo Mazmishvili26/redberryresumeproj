@@ -1,0 +1,51 @@
+.experience-section{
+    max-width: 1920px;
+    width: 100%;
+    height:1080px;
+    /* height: 100vh; */
+}
+
+.experience-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.employer-box{
+    margin-top: 31px;
+}
+
+.userPosition-box input, .employer-box input{
+    height: 48px;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: var(--black-color);
+    outline: none;
+    padding-left: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+
+/* date-input-wrapper-styles */
+
+.date-input-wrapper{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 31px;
+}
+
+.date-input-wrapper input{
+    width: 371px;
+    height: 48px;
+    padding-left: 16px;
+    padding-right: 15px;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+}

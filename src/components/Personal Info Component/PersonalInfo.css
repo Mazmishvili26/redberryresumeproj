@@ -1,21 +1,21 @@
 .personalInfo-section{
     max-width: 1920px;
     width: 100%;
-    height: 100vh;
+    height:1080px;
+    /* height: 100vh; */
 }
 
 .personalInfo-container{
     width: 100%;
     height: 100%;
     display: flex;
-    background-color: yellow;
 }
 
 .left-side{
     position: relative;
     height: 100%;
     width: 1098px;
-    background: #F9F9F9;
+    background: var(--dark-background);
     overflow: hidden;
 }
 
@@ -23,7 +23,7 @@
 .right-side{
     height: 100%;
     width: 822px;
-    background: #FFFFFF;
+    background: var(--white-color);
 }
 
 
@@ -31,6 +31,8 @@
 
 .form-wrapper{
     margin: 157px auto;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -44,8 +46,8 @@
 .userInfo-container input{
     width: 371px;
     height: 48px;
-    background: #FFFFFF;
-    border: 1px solid #BCBCBC;
+    background: var(--white-color);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     padding-left: 16px;
     font-family: 'Helvetica Neue';
@@ -54,10 +56,12 @@
     font-size: 16px;
     line-height: 21px;
     outline: none;
+    color: var(--black-color);
 }
 
 
 .input-box{
+    position: relative;
     display: flex;
     flex-direction: column;
 }
@@ -67,10 +71,10 @@
     margin-bottom: 8px;
     font-family: 'Helvetica Neue';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
     line-height: 21px;
-    color: #000000;
+    color: var(--black-color);
 }
 
 
@@ -84,15 +88,23 @@
     margin-top: 8px;
 }
 
-#input-error{
-    border: 1px solid red !important;
+.error-img{
+    position: absolute;
+    right: -43.5px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
 }
 
-
-#input-success{
-    border: 1px solid green !important;
+.success-img{
+    position: absolute;
+    right: 14.75px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 16.5px;
+    height: 16.5px;
 }
-
 
 /* userPhoto-uploader-styles */
 
@@ -106,17 +118,17 @@
 .uploadPhoto-title{
     font-family: 'Helvetica Neue';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 18px;
     line-height: 22px;
-    color: #1A1A1A;
+    color: var(--off-black-color);
     width: 232px;
 }
 
 .fileUpload-btn{
     width: 107px;
     height: 27px;
-    background: #0E80BF;
+    background: var(--dark-blue);
     border-radius: 4px;
     font-family: 'Helvetica Neue';
     font-style: normal;
@@ -129,6 +141,86 @@
     justify-content: center;
     cursor: pointer;
 }
+
+/* about-me-container-styles */
+
+.about-me-container{
+    margin-top: 49px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.aboutMe-title{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21px;
+    color: var(--black-color);
+}
+
+.about-me-container textarea{
+    height: 103px;
+    resize: none;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    outline: none;
+    color: var(--placeholder-color);
+    padding: 13px 0px 0px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+/* user-email-box-styles */
+
+.user-email-box{
+    margin-top: 33px;
+}
+
+.user-email-box input, .user-phone-box input{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: var(--black-color);
+    height: 48px;
+    padding-left: 16px;
+    outline: none;
+}
+
+
+/* user-phone-box-styles */
+
+.user-phone-box{
+    margin-top: 29px;
+}
+
+
+/* next-btn-styles */
+
+.next-btn{
+    width: 151px;
+    height: 48px;
+    background-color: var(--btn-bg-color);
+    border-radius: 4px;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.08em;
+    color: var(--white-color);
+    border: none;
+    margin-left: auto;
+    margin-top: 160px;
+    cursor: pointer;
+}
+
 
 /* rightSide-styles */
 
@@ -144,7 +236,7 @@
     font-weight: 700;
     font-size: 34px;
     line-height: 42px;
-    color: #F93B1D;
+    color: var(--title-color);
 }
 
 .firstStep-container{
