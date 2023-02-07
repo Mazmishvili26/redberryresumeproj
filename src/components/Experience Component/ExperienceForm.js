@@ -1,58 +1,72 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
 // import components
 import InputBox from "../Personal Info Component/InputBox";
 import DateInput from "./DateInput";
 import TextArea from "../Personal Info Component/TextArea";
-import { yupResolver } from "@hookform/resolvers/yup";
-import Result from "../Result Component/Result";
-import SecondStepResult from "./SecondStepResult";
 
 function ExperienceForm({
   values,
   setValues,
-  setStep,
-  step,
-  handleNext,
   formId,
-  setSaveFormID,
-  resumeInfo,
+  onChange,
+  watch,
+  errors,
+  handleSubmit,
+  register,
+  trigger,
+  setSchema,
+  setValue,
 }) {
-  const schema = Yup.object().shape({
-    [`position-${formId}`]: Yup.string().required().min(2),
-    [`employer-${formId}`]: Yup.string().required().min(2),
-    [`startDate-${formId}`]: Yup.string().required(),
-    [`endDate-${formId}`]: Yup.string().required(),
-    [`description-${formId}`]: Yup.string().required(),
-  });
+  const positionValue = watch(`position-${formId}`);
+  const employerValue = watch(`employer-${formId}`);
+  const startDate = watch(`startDate-${formId}`);
+  const endDate = watch(`endDate-${formId}`);
+  const description = watch(`description-${formId}`);
 
   useEffect(() => {
-    setSaveFormID(formId);
-  }, [formId]);
+    if (
+      (formId > 0 && positionValue?.length > 0) ||
+      employerValue?.length > 0 ||
+      startDate?.length > 0 ||
+      endDate?.length > 0 ||
+      description?.length > 0
+    ) {
+      setSchema(
+        Yup.object().shape({
+          [`position-${formId}`]: Yup.string().required().min(2),
+          [`employer-${formId}`]: Yup.string().required().min(2),
+          [`startDate-${formId}`]: Yup.string().required(),
+          [`endDate-${formId}`]: Yup.string().required(),
+          [`description-${formId}`]: Yup.string().required(),
+        })
+      );
+    }
 
-  const {
-    register,
-    watch,
-    setValue,
-    trigger,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+    if (formId === 0) {
+      setSchema(
+        Yup.object().shape({
+          [`position-${formId}`]: Yup.string().required().min(2),
+          [`employer-${formId}`]: Yup.string().required().min(2),
+          [`startDate-${formId}`]: Yup.string().required(),
+          [`endDate-${formId}`]: Yup.string().required(),
+          [`description-${formId}`]: Yup.string().required(),
+        })
+      );
+    }
+  }, [
+    formId,
+    positionValue?.length,
+    employerValue?.length,
+    startDate?.length,
+    endDate?.length,
+    description?.length,
+  ]);
 
-  const nextPage = (e) => {
-    e.preventDefault();
-    handleSubmit(() => {
-      setStep(step + 1);
-    })();
-  };
   return (
-    <div>
-      <form onSubmit={handleNext} className="form-wrapper container">
-        {" "}
+    <div className={formId > 0 && "added-experience-box"}>
+      <form onSubmit={handleSubmit}>
         <div className="userPosition-box">
           <InputBox
             labelTitle="თანამდებობა"
@@ -68,6 +82,8 @@ function ExperienceForm({
             values={values}
             setValues={setValues}
             trigger={trigger}
+            formId={formId}
+            onChange={onChange}
           />
         </div>
         <div className="employer-box">
@@ -132,9 +148,7 @@ function ExperienceForm({
             formId={formId}
           />
         </div>
-        <button onClick={nextPage}>next</button>
       </form>
-      {/* aq ro rame */}
     </div>
   );
 }

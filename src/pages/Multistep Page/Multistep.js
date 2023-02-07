@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import CircularJSON from "circular-json";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import "./Multistep.css";
@@ -65,34 +64,9 @@ function Multistep() {
     localStorage.setItem("formValues", JSON.stringify(values));
   }, [values]);
 
-  const [resumeInfo, setResumeInfo] = useState([]);
-  const [saveFormID, setSaveFormID] = useState(null);
-
-  useEffect(() => {
-    setResumeInfo([
-      {
-        firstName: values.firstName,
-      },
-      {
-        lastName: values.lastName,
-      },
-      { fileUpload: values.fileUpload },
-      { email: values.email },
-      { phoneNumber: values.phoneNumber },
-      { aboutMe: values.aboutMe },
-      { [`position-${saveFormID}`]: values[saveFormID] },
-    ]);
-  }, [
-    values.firstName,
-    values.lastName,
-    values.fileUpload,
-    values.email,
-    values.phoneNumber,
-    values.aboutMe,
-    values[saveFormID],
-  ]);
-
   // localStorage configuration
+
+  // localStorage.clear();
 
   return (
     <section className="main-section">
@@ -108,24 +82,14 @@ function Multistep() {
           setValues={setValues}
           values={values}
           trigger={trigger}
-          resumeInfo={resumeInfo}
         />
       )}
       {step === 2 && (
         <Experience
           step={step}
-          resumeInfo={resumeInfo}
-          handleSubmit={handleSubmit}
-          watch={watch}
-          errors={errors}
-          register={register}
-          setValue={setValue}
           values={values}
           setValues={setValues}
-          trigger={trigger}
           setStep={setStep}
-          saveFormID={saveFormID}
-          setSaveFormID={setSaveFormID}
         />
       )}
       {step === 3 && <Education />}

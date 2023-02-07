@@ -1,32 +1,40 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import "./Experience.css";
 
 // import components
 import MultistepHeader from "../../pages/Multistep Page/MultistepHeader";
-import Result from "../Result Component/Result";
+import FirstStepResult from "../Result Component/FirstStepResult";
 import ExperienceForm from "./ExperienceForm";
-import SecondStepResult from "./SecondStepResult";
+import SecondStepResult from "../Result Component/SecondStepResult";
 
-function Experience({
-  step,
-  resumeInfo,
-  handleSubmit,
-  watch,
-  errors,
-  register,
-  setValue,
-  values,
-  setValues,
-  trigger,
-  setStep,
-  saveFormID,
-  setSaveFormID,
-}) {
+function Experience({ step, values, setValues, setStep }) {
+  const [schema, setSchema] = useState(null);
+
+  const {
+    register,
+    watch,
+    setValue,
+    trigger,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(schema),
+  });
+
   const [componentCount, setComponentCount] = useState(1);
 
   const addForm = () => {
     setComponentCount((count) => count + 1);
+  };
+
+  const nextPage = (e) => {
+    e.preventDefault();
+    handleSubmit(() => {
+      setStep(step + 1);
+    })();
   };
 
   return (
@@ -34,39 +42,38 @@ function Experience({
       <div className="experience-container">
         <div className="left-side">
           <MultistepHeader step={step} />
+          <div className="form-wrapper container">
+            {Array.from({ length: componentCount }, (_, i) => (
+              <ExperienceForm
+                values={values}
+                setValues={setValues}
+                key={i}
+                formId={i}
+                defaultValues={{ description: "" }}
+                setSchema={setSchema}
+                //
+                handleSubmit={handleSubmit}
+                watch={watch}
+                errors={errors}
+                register={register}
+                setValue={setValue}
+                trigger={trigger}
+              />
+            ))}
 
-          {Array.from({ length: componentCount }, (_, i) => (
-            <ExperienceForm
-              watch={watch}
-              errors={errors}
-              register={register}
-              setValue={setValue}
-              values={values}
-              trigger={trigger}
-              setValues={setValues}
-              handleSubmit={handleSubmit}
-              setStep={setStep}
-              step={step}
-              key={i}
-              formId={i}
-              defaultValues={{ description: "" }}
-              setSaveFormID={setSaveFormID}
-              resumeInfo={resumeInfo}
-              saveFormID={saveFormID}
-            />
-          ))}
-
-          <button type="button" className="add-more-btn" onClick={addForm}>
-            მეტი გამოცდილების დამატება
-          </button>
+            <button type="button" className="add-more-btn" onClick={addForm}>
+              მეტი გამოცდილების დამატება
+            </button>
+            <div className="stepper-btn-container">
+              <button className="prev-btn">უკან</button>
+              <button id="next-btn" className="next-btn" onClick={nextPage}>
+                შემდეგი
+              </button>
+            </div>
+          </div>
         </div>
         <div className="right-side">
-          <Result
-            step={step}
-            resumeInfo={resumeInfo}
-            values={values}
-            saveFormID={saveFormID}
-          />
+          <FirstStepResult step={step} values={values} />
           {Array.from({ length: componentCount }, (_, i) => (
             <SecondStepResult values={values} formId={i} />
           ))}

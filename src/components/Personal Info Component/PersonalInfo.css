@@ -2,13 +2,13 @@
     max-width: 1920px;
     width: 100%;
     height:1080px;
-    /* height: 100vh; */
 }
 
 .personalInfo-container{
     width: 100%;
     height: 100%;
     display: flex;
+    background-color: gray;
 }
 
 .left-side{

@@ -8,14 +8,18 @@
 .userInfo-Container{
     display: flex;
     justify-content: space-between;
-    height: auto;
-    background-color: gray;
+    flex-wrap: wrap;
+}
+
+.userName-title-box{
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .userName-title{
-    max-width: 432px;
-    width: 100%;
-    word-wrap: break-word;
     font-family: 'Helvetica Neue';
     font-style: normal;
     font-weight: 700;
@@ -105,3 +109,68 @@
 
 /* secondStep-styles */
 
+.second-result-section{
+    margin: 24px 80px 0px 80px;
+}
+
+.result-title{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--title-color);
+}
+
+.profession-container{
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    gap: 7px;
+}
+
+
+.position-title, .employee-title{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--black-color);
+}
+
+
+.date-container{
+    display: flex;
+    align-items: center;
+    margin-top: 7px;
+    gap: 10px;
+}
+
+.date-container p{
+    font-family: 'Helvetica Neue';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #919191;
+}
+
+
+.description-container{
+    max-width: 662px;
+    width: 100%;
+    margin-top: 16px;
+}
+
+
+.description-container p{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    text-transform: capitalize;
+    color: var(--black-color);
+    word-wrap: break-word;
+}

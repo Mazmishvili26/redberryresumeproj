@@ -43,7 +43,7 @@ function TextArea({
         registerValue === "description" &&
         typeof textAreaValue === "string"
       ) {
-        if (textAreaValue.length > 0) {
+        if (textAreaValue.length > 0 || errors[registerValue]) {
           if (errors[registerValue]) {
             setTextAreaBorder((prev) => {
               const newBorderColors = [...prev];
@@ -62,10 +62,10 @@ function TextArea({
       }
     }
     if (
-      typeof textAreaValue === "string" &&
+      typeof textAreaValue === "string" ||
       registerValue === `description-${formId}`
     ) {
-      if (textAreaValue.length === 0 && errors[registerValue]) {
+      if (textAreaValue?.length === 0 && errors[registerValue]) {
         setTextAreaBorder((prev) => {
           const newBorderColors = [...prev];
           newBorderColors[inputIndex] = "1px solid red";

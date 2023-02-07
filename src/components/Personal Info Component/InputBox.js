@@ -18,6 +18,8 @@ function InputBox({
   setValues,
   setValue,
   trigger,
+  formId,
+  onChange,
   // localStorageValue,
 }) {
   const [borderColors, setBorderColors] = useState(
@@ -73,6 +75,7 @@ function InputBox({
     setValue(registerValue, e.target.value);
     // for trigger validation
     trigger(e.target.name);
+    // onChange();
   };
 
   useEffect(() => {

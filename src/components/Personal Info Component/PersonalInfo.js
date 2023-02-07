@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
 import "./PersonalInfo.css";
 
 // import components
 import MultistepHeader from "../../pages/Multistep Page/MultistepHeader";
-import Result from "../Result Component/Result";
+import FirstStepResult from "../Result Component/FirstStepResult";
 import InputBox from "./InputBox";
 import TextArea from "./TextArea";
 import UploadPhoto from "./UploadPhoto";
@@ -19,7 +18,6 @@ function PersonalInfo({
   values,
   setValues,
   trigger,
-  resumeInfo,
 }) {
   const nextPage = (e) => {
     e.preventDefault();
@@ -137,7 +135,7 @@ function PersonalInfo({
           </form>
         </div>
         <div className="right-side">
-          <Result step={step} resumeInfo={resumeInfo} />
+          <FirstStepResult step={step} values={values} />
         </div>
       </div>
     </section>

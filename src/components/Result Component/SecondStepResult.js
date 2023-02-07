@@ -9,8 +9,11 @@ function SecondStepResult({ values, formId }) {
         <p className="employee-title">{values[`employer-${formId}`]}</p>
       </div>
       <div className="date-container">
-        <p>{values[`startDate-${formId}`]} - </p>
+        <p>{values[`startDate-${formId}`]}</p>
         <p>{values[`endDate-${formId}`]}</p>
+      </div>
+      <div className="description-container">
+        <p>{values[`description-${formId}`]}</p>
       </div>
     </section>
   );
