@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import "./Experience.css";
@@ -24,7 +24,9 @@ function Experience({ step, values, setValues, setStep }) {
     resolver: yupResolver(schema),
   });
 
-  const [componentCount, setComponentCount] = useState(1);
+  const [componentCount, setComponentCount] = useState(
+    parseInt(localStorage.getItem("componentCount")) || 1
+  );
 
   const addForm = () => {
     setComponentCount((count) => count + 1);
@@ -37,6 +39,10 @@ function Experience({ step, values, setValues, setStep }) {
     })();
   };
 
+  useEffect(() => {
+    localStorage.setItem("componentCount", componentCount);
+  }, [componentCount]);
+
   return (
     <section className="experience-section">
       <div className="experience-container">
@@ -45,10 +51,10 @@ function Experience({ step, values, setValues, setStep }) {
           <div className="form-wrapper container">
             {Array.from({ length: componentCount }, (_, i) => (
               <ExperienceForm
-                values={values}
-                setValues={setValues}
                 key={i}
                 formId={i}
+                values={values}
+                setValues={setValues}
                 defaultValues={{ description: "" }}
                 setSchema={setSchema}
                 //
@@ -58,6 +64,7 @@ function Experience({ step, values, setValues, setStep }) {
                 register={register}
                 setValue={setValue}
                 trigger={trigger}
+                componentCount={componentCount}
               />
             ))}
 

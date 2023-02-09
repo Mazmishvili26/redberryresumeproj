@@ -18,6 +18,7 @@ function ExperienceForm({
   trigger,
   setSchema,
   setValue,
+  componentCount,
 }) {
   const positionValue = watch(`position-${formId}`);
   const employerValue = watch(`employer-${formId}`);
@@ -77,7 +78,7 @@ function ExperienceForm({
             watch={watch}
             errors={errors}
             register={register}
-            inputIndex={0}
+            inputIndex={4}
             setValue={setValue}
             values={values}
             setValues={setValues}
@@ -96,7 +97,7 @@ function ExperienceForm({
             watch={watch}
             errors={errors}
             register={register}
-            inputIndex={0}
+            inputIndex={5}
             setValue={setValue}
             values={values}
             setValues={setValues}
@@ -119,7 +120,7 @@ function ExperienceForm({
           />
           <DateInput
             register={register}
-            inputIndex={0}
+            inputIndex={1}
             watch={watch}
             registerValue={`endDate-${formId}`}
             name={`endDate-${formId}`}

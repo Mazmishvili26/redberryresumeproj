@@ -121,7 +121,7 @@ function PersonalInfo({
                 watch={watch}
                 errors={errors}
                 register={register}
-                inputIndex={2}
+                inputIndex={3}
                 setValue={setValue}
                 values={values}
                 setValues={setValues}

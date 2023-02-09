@@ -14,7 +14,7 @@ function DateInput({
   labelText,
 }) {
   const [borderColors, setBorderColors] = useState(
-    Array(2).fill("1px solid #BCBCBC")
+    Array(3).fill("1px solid #BCBCBC")
   );
 
   const inputValue = watch(registerValue);

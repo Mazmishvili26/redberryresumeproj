@@ -140,4 +140,12 @@
     background-color: var(--btn-bg-color);
     border-radius: 4px;
     color: var(--white-color);
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.08em;
+    color: var(--white-color);
+    cursor: pointer;
 }

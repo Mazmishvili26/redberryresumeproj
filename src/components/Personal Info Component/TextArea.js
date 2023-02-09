@@ -18,7 +18,7 @@ function TextArea({
   // textArea validation
 
   const [textAreaBorder, setTextAreaBorder] = useState(
-    Array(2).fill("1px solid #BCBCBC")
+    Array(3).fill("1px solid #BCBCBC")
   );
 
   const textAreaValue = watch(registerValue);
@@ -72,6 +72,13 @@ function TextArea({
           return newBorderColors;
         });
       }
+    }
+    if (errors[registerValue]) {
+      setTextAreaBorder((prev) => {
+        const newBorderColors = [...prev];
+        newBorderColors[inputIndex] = "1px solid #EF5050";
+        return newBorderColors;
+      });
     }
   }, [
     textAreaBorder[inputIndex],

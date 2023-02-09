@@ -6,11 +6,9 @@ import email from "../../assets/email-icon.png";
 import phone from "../../assets/phone-icon.png";
 
 function FirstStepResult({ step, values, formId }) {
-  console.log("val", values);
-
   return (
     <section className="result-section">
-      <div className={step === 2 ? "userInfo-wrapper" : null}>
+      <div className={step === 2 || step === 3 ? "userInfo-wrapper" : null}>
         <div className="userInfo-container">
           <div>
             {/*  */}

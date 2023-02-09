@@ -20,10 +20,10 @@ function InputBox({
   trigger,
   formId,
   onChange,
-  // localStorageValue,
+  sumOfValues,
 }) {
   const [borderColors, setBorderColors] = useState(
-    Array(5).fill("1px solid #BCBCBC")
+    Array(6).fill("1px solid #BCBCBC")
   );
 
   const [noError, setNoError] = useState(false);
@@ -60,6 +60,14 @@ function InputBox({
           return newBorderColors;
         });
       }
+    }
+
+    if (errors[registerValue]) {
+      setBorderColors((prev) => {
+        const newBorderColors = [...prev];
+        newBorderColors[inputIndex] = "1px solid #EF5050";
+        return newBorderColors;
+      });
     }
   }, [errors[registerValue], borderColors[inputIndex], inputValue?.length]);
 

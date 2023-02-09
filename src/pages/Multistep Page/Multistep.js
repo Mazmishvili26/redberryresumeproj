@@ -66,8 +66,6 @@ function Multistep() {
 
   // localStorage configuration
 
-  // localStorage.clear();
-
   return (
     <section className="main-section">
       {step === 1 && (
@@ -92,7 +90,14 @@ function Multistep() {
           setStep={setStep}
         />
       )}
-      {step === 3 && <Education />}
+      {step === 3 && (
+        <Education
+          step={step}
+          setStep={setStep}
+          setValues={setValues}
+          values={values}
+        />
+      )}
     </section>
   );
 }
