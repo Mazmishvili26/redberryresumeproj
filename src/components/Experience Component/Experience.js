@@ -9,7 +9,15 @@ import FirstStepResult from "../Result Component/FirstStepResult";
 import ExperienceForm from "./ExperienceForm";
 import SecondStepResult from "../Result Component/SecondStepResult";
 
-function Experience({ step, values, setValues, setStep }) {
+function Experience({
+  step,
+  values,
+  setValues,
+  setStep,
+  saveFormId,
+  setSaveFormId,
+  setExperience,
+}) {
   const [schema, setSchema] = useState(null);
 
   const {
@@ -30,6 +38,7 @@ function Experience({ step, values, setValues, setStep }) {
 
   const addForm = () => {
     setComponentCount((count) => count + 1);
+    setSaveFormId((prevSaveFormId) => [...prevSaveFormId, componentCount]);
   };
 
   const nextPage = (e) => {
@@ -41,7 +50,8 @@ function Experience({ step, values, setValues, setStep }) {
 
   useEffect(() => {
     localStorage.setItem("componentCount", componentCount);
-  }, [componentCount]);
+    localStorage.setItem("experienceFormId", JSON.stringify(saveFormId));
+  }, [componentCount, saveFormId]);
 
   return (
     <section className="experience-section">
@@ -65,6 +75,9 @@ function Experience({ step, values, setValues, setStep }) {
                 setValue={setValue}
                 trigger={trigger}
                 componentCount={componentCount}
+                //
+                value={values}
+                setExperience={setExperience}
               />
             ))}
 
@@ -82,7 +95,7 @@ function Experience({ step, values, setValues, setStep }) {
         <div className="right-side">
           <FirstStepResult step={step} values={values} />
           {Array.from({ length: componentCount }, (_, i) => (
-            <SecondStepResult values={values} formId={i} />
+            <SecondStepResult values={values} formId={i} watch={watch} />
           ))}
         </div>
       </div>

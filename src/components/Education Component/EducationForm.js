@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useFormContext, Controller, useForm } from "react-hook-form";
+
 import axios from "axios";
 import * as Yup from "yup";
 
@@ -25,9 +27,12 @@ function EducationForm({
   trigger,
   handleSubmit,
   setSchema,
+  selectboxValue,
+  setSelectboxValue,
+  selectboxError,
+  selectboxSuccess,
 }) {
   const [openSelectboxDropdown, setOpenSelectboxDropdown] = useState(false);
-  const [selectboxValue, setSelectboxValue] = useState("");
   const [degrees, setDegrees] = useState([]);
 
   useEffect(() => {
@@ -75,7 +80,15 @@ function EducationForm({
         <div className="user-education-container">
           <div>
             <label className="selectBox-title">ხარისხი</label>
-            <div className="select-box">
+            <div
+              className={
+                selectboxError
+                  ? "select-box selectbox-error"
+                  : selectboxSuccess
+                  ? "select-box selectbox-success"
+                  : "select-box"
+              }
+            >
               <p
                 className={
                   selectboxValue ? "selectBox-value active" : "selectBox-value"

@@ -57,6 +57,13 @@
     margin-top: 8px;
 }
 
+.selectbox-error{
+    border: 1px solid var(--error-color);
+}
+
+.selectbox-success{
+    border: 1px solid rgb(152, 227, 126);
+}
 
 .selectBox-value{
     font-family: 'Helvetica Neue';

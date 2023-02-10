@@ -33,6 +33,13 @@ function Multistep() {
     formState: { errors },
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
+  // testing
+  const [saveFormId, setSaveFormId] = useState(
+    JSON.parse(localStorage.getItem("experienceFormId")) || [0]
+  );
+
+  const [experience, setExperience] = useState([]);
+
   // store errors in localStorage
 
   // const [localStorageErrors, setLocalStorageErrors] = useState(
@@ -88,6 +95,9 @@ function Multistep() {
           values={values}
           setValues={setValues}
           setStep={setStep}
+          saveFormId={saveFormId}
+          setSaveFormId={setSaveFormId}
+          setExperience={setExperience}
         />
       )}
       {step === 3 && (
@@ -96,6 +106,8 @@ function Multistep() {
           setStep={setStep}
           setValues={setValues}
           values={values}
+          saveFormId={saveFormId}
+          experience={experience}
         />
       )}
     </section>

@@ -1,6 +1,6 @@
 import React from "react";
 
-function SecondStepResult({ values, formId }) {
+function SecondStepResult({ values, formId, watch }) {
   const positionLength = values[`position-${formId}`]?.length;
   const employerLength = values[`employer-${formId}`]?.length;
   const startDateValue = values[`startDate-${formId}`];
