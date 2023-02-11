@@ -55,7 +55,6 @@ function DateInput({
     setValue(registerValue, e.target.value);
     // for trigger validation
     trigger(e.target.name);
-    console.log(e.target.value);
   };
 
   useEffect(() => {

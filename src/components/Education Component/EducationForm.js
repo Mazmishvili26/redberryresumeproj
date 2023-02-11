@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useFormContext, Controller, useForm } from "react-hook-form";
+import React, { useEffect, useState, useRef } from "react";
 
 import axios from "axios";
 import * as Yup from "yup";
@@ -27,23 +26,45 @@ function EducationForm({
   trigger,
   handleSubmit,
   setSchema,
-  selectboxValue,
-  setSelectboxValue,
-  selectboxError,
-  selectboxSuccess,
 }) {
-  const [openSelectboxDropdown, setOpenSelectboxDropdown] = useState(false);
-  const [degrees, setDegrees] = useState([]);
+  const educationValue = watch(`education-${formId}`);
+  const educationDate = watch(`educationDate-${formId}`);
+  const educationDescriptionValue = watch(`educationDescription-${formId}`);
 
   useEffect(() => {
-    setSchema(
-      Yup.object().shape({
-        [`education-${formId}`]: Yup.string().required().min(2),
-        [`educationDate-${formId}`]: Yup.string().required(),
-        [`educationDescription-${formId}`]: Yup.string().required(),
-      })
-    );
-  }, []);
+    if (
+      (formId > 0 && educationValue?.length > 0) ||
+      educationDate ||
+      educationDescriptionValue?.length > 0
+    ) {
+      setSchema(
+        Yup.object().shape({
+          [`education-${formId}`]: Yup.string().required().min(2),
+          [`educationDate-${formId}`]: Yup.string().required(),
+          [`educationDescription-${formId}`]: Yup.string().required(),
+          [`selectedOption-${formId}`]: Yup.string().required(),
+        })
+      );
+    }
+
+    if (formId === 0) {
+      setSchema(
+        Yup.object().shape({
+          [`education-${formId}`]: Yup.string().required().min(2),
+          [`educationDate-${formId}`]: Yup.string().required(),
+          [`educationDescription-${formId}`]: Yup.string().required(),
+          [`selectedOption-${formId}`]: Yup.string().required(),
+        })
+      );
+    }
+  }, [
+    formId,
+    educationValue?.length,
+    educationDate,
+    educationDescriptionValue?.length,
+  ]);
+
+  const [degrees, setDegrees] = useState([]);
 
   // getDegrees
 
@@ -56,8 +77,27 @@ function EducationForm({
     getDegreeData();
   }, []);
 
+  // selectbox states
+
+  const takeValueFromStorage = localStorage.getItem("formValues");
+  const localStorageValue = takeValueFromStorage
+    ? JSON.parse(takeValueFromStorage)[`selectedOption-${formId}`]
+    : "";
+
+  const [selectBoxValue, setSelectBoxValue] = useState(localStorageValue);
+  const [isSelectboxOpen, setIsSelectboxOpen] = useState(false);
+  const selectboxRef = useRef(null);
+
+  useEffect(() => {
+    setValues({ ...values, [`selectedOption-${formId}`]: selectBoxValue });
+    setValue(`selectedOption-${formId}`, selectBoxValue);
+    if (selectBoxValue) {
+      selectboxRef.current.style.border = "1px solid rgb(152, 227, 126)";
+    }
+  }, [selectBoxValue, errors[`selectedOption-${formId}`]]);
+
   return (
-    <div>
+    <div className={formId > 0 ? "educatin-new-form" : null}>
       <form onSubmit={handleSubmit}>
         <div className="userSchool-box">
           <InputBox
@@ -78,33 +118,34 @@ function EducationForm({
           />
         </div>
         <div className="user-education-container">
+          {/*  */}
           <div>
             <label className="selectBox-title">ხარისხი</label>
             <div
+              ref={selectboxRef}
               className={
-                selectboxError
+                errors[`selectedOption-${formId}`]
                   ? "select-box selectbox-error"
-                  : selectboxSuccess
-                  ? "select-box selectbox-success"
                   : "select-box"
               }
             >
               <p
                 className={
-                  selectboxValue ? "selectBox-value active" : "selectBox-value"
+                  selectBoxValue ? "selectBox-value active" : "selectBox-value"
                 }
               >
-                {selectboxValue ? selectboxValue : "აირჩიეთ ხარისხი"}
+                {selectBoxValue ? selectBoxValue : "აირჩიეთ ხარისხი"}
               </p>
               <img
                 src={vector}
                 className="selectBox-arrow"
-                onClick={() => setOpenSelectboxDropdown(!openSelectboxDropdown)}
+                onClick={() => setIsSelectboxOpen(!isSelectboxOpen)}
               />
             </div>
+            {/*  */}
             <div
               className={
-                openSelectboxDropdown
+                isSelectboxOpen
                   ? "selectBox-dropdown open"
                   : "selectBox-dropdown"
               }
@@ -115,14 +156,21 @@ function EducationForm({
                     <DegreeList
                       key={degree.id}
                       degree={degree}
-                      setSelectboxValue={setSelectboxValue}
-                      setOpenSelectboxDropdown={setOpenSelectboxDropdown}
+                      setIsSelectboxOpen={setIsSelectboxOpen}
+                      setSelectboxValue={setSelectBoxValue}
                     />
                   );
                 })}
               </ul>
             </div>
+            <input
+              type="hidden"
+              name="selectedOption"
+              {...register(`selectedOption-${formId}`)}
+              value={selectBoxValue}
+            />
           </div>
+
           {/*  */}
           <div className="education-date-box">
             <DateInput

@@ -38,6 +38,7 @@ function Multistep() {
     JSON.parse(localStorage.getItem("experienceFormId")) || [0]
   );
 
+  // experienceComponent array to send backend
   const [experience, setExperience] = useState([]);
 
   // store errors in localStorage
@@ -73,6 +74,8 @@ function Multistep() {
 
   // localStorage configuration
 
+  localStorage.clear();
+
   return (
     <section className="main-section">
       {step === 1 && (
@@ -97,6 +100,8 @@ function Multistep() {
           setStep={setStep}
           saveFormId={saveFormId}
           setSaveFormId={setSaveFormId}
+          // setExperience={setExperience}
+          experience={experience}
           setExperience={setExperience}
         />
       )}
@@ -107,6 +112,7 @@ function Multistep() {
           setValues={setValues}
           values={values}
           saveFormId={saveFormId}
+          //
           experience={experience}
         />
       )}

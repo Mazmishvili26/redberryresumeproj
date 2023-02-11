@@ -16,6 +16,8 @@ function Experience({
   setStep,
   saveFormId,
   setSaveFormId,
+  addExperience,
+  experience,
   setExperience,
 }) {
   const [schema, setSchema] = useState(null);
@@ -36,9 +38,28 @@ function Experience({
     parseInt(localStorage.getItem("componentCount")) || 1
   );
 
+  // ---------------------------------------------
+
+  const positionValue = watch(`position-${componentCount - 1}`);
+  const employerValue = watch(`employer-${componentCount - 1}`);
+  const startDate = watch(`startDate-${componentCount - 1}`);
+  const endDate = watch(`endDate-${componentCount - 1}`);
+  const description = watch(`description-${componentCount - 1}`);
+
   const addForm = () => {
     setComponentCount((count) => count + 1);
     setSaveFormId((prevSaveFormId) => [...prevSaveFormId, componentCount]);
+    // creating experience Array of objects to send backend
+    setExperience([
+      ...experience,
+      {
+        position: positionValue,
+        employer: employerValue,
+        start_date: startDate,
+        due_date: endDate,
+        description: description,
+      },
+    ]);
   };
 
   const nextPage = (e) => {
@@ -77,7 +98,8 @@ function Experience({
                 componentCount={componentCount}
                 //
                 value={values}
-                setExperience={setExperience}
+                // experience={experience}
+                // setExperience={setExperience}
               />
             ))}
 

@@ -19,51 +19,15 @@ function ExperienceForm({
   setSchema,
   setValue,
   componentCount,
-  setExperience,
+  //
+  // experience,
+  // setExperience,
 }) {
   const positionValue = watch(`position-${formId}`);
   const employerValue = watch(`employer-${formId}`);
   const startDate = watch(`startDate-${formId}`);
   const endDate = watch(`endDate-${formId}`);
   const description = watch(`description-${formId}`);
-
-  // const [experience, setExperience] = useState([]);
-
-  useEffect(() => {
-    setExperience((prevExperience) => {
-      const existingExperience = prevExperience.find(
-        (exp) => exp.formId === formId
-      );
-      if (existingExperience) {
-        return prevExperience.map((exp) =>
-          exp.formId === formId
-            ? {
-                formId,
-                position: positionValue,
-                employer: employerValue,
-                start_date: startDate,
-                end_date: endDate,
-                description: description,
-              }
-            : exp
-        );
-      } else {
-        return [
-          ...prevExperience,
-          {
-            formId,
-            position: positionValue,
-            employer: employerValue,
-            start_date: startDate,
-            end_date: endDate,
-            description: description,
-          },
-        ];
-      }
-    });
-  }, [formId, positionValue, employerValue, startDate, endDate, description]);
-
-  // localStorage.clear();
 
   useEffect(() => {
     if (
