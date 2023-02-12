@@ -8,8 +8,9 @@ function DegreeList({
   //
   setIsSelectboxOpen,
   setSelectboxValue,
+  setDegreeId,
 }) {
-  const { title } = degree;
+  const { id, title } = degree;
 
   // const handleSelectboxValue = (e) => {
   //   setSelectboxValue((prevState) => ({
@@ -22,6 +23,7 @@ function DegreeList({
   const handleSelectboxValue = (e) => {
     setSelectboxValue(e.target.innerText);
     setIsSelectboxOpen(false);
+    setDegreeId(id);
   };
 
   return <li onClick={handleSelectboxValue}>{title}</li>;

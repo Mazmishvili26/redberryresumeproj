@@ -1,5 +1,8 @@
 import "./PersonalInfo.css";
 
+// import assets
+import logo from "../../assets/logo2.png";
+
 // import components
 import MultistepHeader from "../../pages/Multistep Page/MultistepHeader";
 import FirstStepResult from "../Result Component/FirstStepResult";
@@ -18,6 +21,8 @@ function PersonalInfo({
   values,
   setValues,
   trigger,
+  //
+  setSavePhotoValue,
 }) {
   const nextPage = (e) => {
     e.preventDefault();
@@ -73,6 +78,8 @@ function PersonalInfo({
                 setValue={setValue}
                 trigger={trigger}
                 errors={errors}
+                //
+                setSavePhotoValue={setSavePhotoValue}
               />
             </div>
 
@@ -136,6 +143,7 @@ function PersonalInfo({
         </div>
         <div className="right-side">
           <FirstStepResult step={step} values={values} />
+          <img src={logo} className="logo-img" />
         </div>
       </div>
     </section>

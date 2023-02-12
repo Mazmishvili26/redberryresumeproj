@@ -26,6 +26,7 @@ function EducationForm({
   trigger,
   handleSubmit,
   setSchema,
+  setDegreeId,
 }) {
   const educationValue = watch(`education-${formId}`);
   const educationDate = watch(`educationDate-${formId}`);
@@ -158,6 +159,7 @@ function EducationForm({
                       degree={degree}
                       setIsSelectboxOpen={setIsSelectboxOpen}
                       setSelectboxValue={setSelectBoxValue}
+                      setDegreeId={setDegreeId}
                     />
                   );
                 })}

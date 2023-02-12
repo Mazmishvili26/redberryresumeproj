@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import "./Experience.css";
 
+// import assets
+import logo from "../../assets/logo2.png";
+
 // import components
 import MultistepHeader from "../../pages/Multistep Page/MultistepHeader";
 import FirstStepResult from "../Result Component/FirstStepResult";
@@ -64,6 +67,16 @@ function Experience({
 
   const nextPage = (e) => {
     e.preventDefault();
+    setExperience([
+      ...experience,
+      {
+        position: positionValue,
+        employer: employerValue,
+        start_date: startDate,
+        due_date: endDate,
+        description: description,
+      },
+    ]);
     handleSubmit(() => {
       setStep(step + 1);
     })();
@@ -75,7 +88,13 @@ function Experience({
   }, [componentCount, saveFormId]);
 
   return (
-    <section className="experience-section">
+    <section
+      className={
+        componentCount > 1
+          ? "experience-section auto-height"
+          : "experience-section"
+      }
+    >
       <div className="experience-container">
         <div className="left-side">
           <MultistepHeader step={step} />
@@ -119,6 +138,7 @@ function Experience({
           {Array.from({ length: componentCount }, (_, i) => (
             <SecondStepResult values={values} formId={i} watch={watch} />
           ))}
+          <img src={logo} className="logo-img" />
         </div>
       </div>
     </section>

@@ -19,13 +19,24 @@
     overflow: hidden;
 }
 
+.auto-height .right-side{
+    height: 1080px;
+}
 
 .right-side{
+    position: relative;
     height: 100%;
     width: 822px;
     background: var(--white-color);
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
+.logo-img{
+    position: absolute;
+    bottom:44px;
+    left: 78px;
+}
 
 /* form-wrapper-styles */
 

@@ -1,13 +1,20 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import MultistepHeader from "../../pages/Multistep Page/MultistepHeader";
+import localforage from "localforage";
 import "./Education.css";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+
+// import components
+import MultistepHeader from "../../pages/Multistep Page/MultistepHeader";
 import EducationForm from "./EducationForm";
-import ThirdStepResult from "../Result Component/ThirdStepResult";
 import FirstStepResult from "../Result Component/FirstStepResult";
 import SecondStepResult from "../Result Component/SecondStepResult";
-import axios from "axios";
+import ThirdStepResult from "../Result Component/ThirdStepResult";
+
+// import assets
+import logo from "../../assets/logo2.png";
 
 function Education({
   step,
@@ -16,6 +23,10 @@ function Education({
   values,
   saveFormId,
   experience,
+  savePhotoValue,
+  setResumeInfo,
+  //
+  resumeInfo,
 }) {
   const [schema, setSchema] = useState(null);
 
@@ -31,11 +42,24 @@ function Education({
     resolver: yupResolver(schema),
   });
 
-  const [educationComponentCount, setEducationComponentCount] = useState(1);
+  // educationComponent state and save to localstorage
+  const [educationComponentCount, setEducationComponentCount] = useState(
+    parseInt(localStorage.getItem("educationComponentCount")) || 1
+  );
+
+  useEffect(() => {
+    localStorage.setItem("educationComponentCount", educationComponentCount);
+  }, [educationComponentCount]);
+
+  // educationComponent state and save to localstorage
+
+  const [degreeId, setDegreeId] = useState(null);
 
   // creating education array of objects
   const [education, setEducation] = useState([]);
+
   const educationValue = watch(`education-${educationComponentCount - 1}`);
+
   const selectedOptionValue = watch(
     `selectedOption-${educationComponentCount - 1}`
   );
@@ -46,12 +70,17 @@ function Education({
     `educationDescription-${educationComponentCount - 1}`
   );
 
+  // creating education array of objects
+
+  // adding objects in education array
+  const [submitted, setSubmitted] = useState(false);
+
   const addForm = () => {
     setEducationComponentCount((count) => count + 1);
     setEducation([
       ...education,
       {
-        degree_id: 1,
+        degree_id: degreeId,
         institute: educationValue,
         degree: selectedOptionValue,
         due_date: educationDateValue,
@@ -63,48 +92,79 @@ function Education({
   // submit
   const nextPage = (e) => {
     e.preventDefault();
-    setEducation([
+
+    const newEducation = [
       ...education,
       {
-        degree_id: 1,
+        degree_id: degreeId,
         institute: educationValue,
         degree: selectedOptionValue,
         due_date: educationDateValue,
         description: educationDescriptionValue,
       },
-    ]);
+    ];
+    // filter to avoid same object add in array
+    setEducation(
+      newEducation.filter(
+        (edu, index, self) =>
+          self.findIndex(
+            (t) =>
+              t.institute === edu.institute &&
+              t.degree === edu.degree &&
+              t.due_date === edu.due_date &&
+              t.description === edu.description
+          ) === index
+      )
+    );
+
+    setSubmitted(true);
   };
 
+  // for Success navigate
+  const navigate = useNavigate();
+
   useEffect(() => {
-    handleSubmit(() => {
-      axios
-        .post(
-          "https://resume.redberryinternship.ge/api/cvs",
-          {
-            name: values.firstName,
-            surname: values.lastName,
-            email: values.email,
-            phone_number: values.phoneNumber,
-            experiences: experience,
-            educations: education,
-            image:
-              "/storage/images/0rI7LyNRJRrokoSKUTb9EKvNuyYFKOvUmDQWoFt6.png",
+    if (!submitted) return;
+
+    axios
+      .post(
+        "https://resume.redberryinternship.ge/api/cvs",
+        {
+          name: values.firstName,
+          surname: values.lastName,
+          email: values.email,
+          phone_number: values.phoneNumber,
+          experiences: experience,
+          educations: education,
+          image: savePhotoValue,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
           },
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((resp) => {
-          console.log(resp);
-        })
-        .catch((err) => console.log(err));
-    })();
-  }, [experience, education]);
+        }
+      )
+      .then((resp) => {
+        setTimeout(() => {
+          console.log(resp.data); // log the data to check if it contains what you expect
+          setResumeInfo(resp.data);
+        }, 0);
+        navigate("/userResume");
+        localStorage.clear();
+        localforage.clear();
+      })
+      .catch((err) => alert("წარუმატებელი მცდელობა მიზეზი" + err));
+    setSubmitted(false);
+  }, [submitted, experience, education, values, resumeInfo]);
 
   return (
-    <section className="education-section">
+    <section
+      className={
+        educationComponentCount > 1
+          ? "education-section auto-height"
+          : "education-section"
+      }
+    >
       <div className="education-container">
         <div className="left-side">
           <MultistepHeader step={step} />
@@ -122,6 +182,7 @@ function Education({
                 register={register}
                 setSchema={setSchema}
                 handleSubmit={handleSubmit}
+                setDegreeId={setDegreeId}
               />
             ))}
             <button type="button" className="add-more-btn" onClick={addForm}>
@@ -129,8 +190,13 @@ function Education({
             </button>
             <div className="stepper-btn-container">
               <button className="prev-btn">უკან</button>
-              <button id="next-btn" className="next-btn" onClick={nextPage}>
-                შემდეგი
+              <button
+                type="submit"
+                id="next-btn"
+                className="next-btn"
+                onClick={nextPage}
+              >
+                დასრულება
               </button>
             </div>
           </div>
@@ -143,6 +209,7 @@ function Education({
           {Array.from({ length: educationComponentCount }, (_, i) => (
             <ThirdStepResult values={values} formId={i} />
           ))}
+          <img src={logo} className="logo-img" />
         </div>
       </div>
     </section>

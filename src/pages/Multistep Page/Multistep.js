@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import localforage from "localforage";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -13,7 +14,7 @@ const fullNameRegex = /^[\u10A0-\u10FF\s]+$/;
 const emailRegex = /[a-z0-9]+@redberry.ge$/;
 const phoneRegEx = /^(\+995)(79\d{7}|5\d{8})$/;
 
-function Multistep() {
+function Multistep({ resumeInfo, setResumeInfo }) {
   const [step, setStep] = useState(1);
 
   const schema = Yup.object().shape({
@@ -33,34 +34,34 @@ function Multistep() {
     formState: { errors },
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
-  // testing
+  // -------------------------------------------------------------------------------
+
+  // savePhotoValue to send backend with localForage
+  const [savePhotoValue, setSavePhotoValue] = useState(null);
+
+  useEffect(() => {
+    localforage.getItem("photoName").then((value) => {
+      setSavePhotoValue(value || []);
+    });
+  }, []);
+
+  useEffect(() => {
+    localforage.setItem("photoName", savePhotoValue);
+  }, [savePhotoValue]);
+
+  // -------------------------------------------------------------------------------
+
+  // formIDsaver in experience component, for when user add newForm and refresh the added form should still be.
   const [saveFormId, setSaveFormId] = useState(
     JSON.parse(localStorage.getItem("experienceFormId")) || [0]
   );
 
+  // -------------------------------------------------------------------------------
+
   // experienceComponent array to send backend
   const [experience, setExperience] = useState([]);
 
-  // store errors in localStorage
-
-  // const [localStorageErrors, setLocalStorageErrors] = useState(
-  //   JSON.parse(localStorage.getItem("errors")) || {}
-  // );
-
-  // useEffect(() => {
-  //   if (
-  //     performance.navigation.type === 1 &&
-  //     !Object.keys(errors).length === 0
-  //   ) {
-  //     setLocalStorageErrors({ ...errors });
-  //   }
-  // }, [Object.keys(errors).length]);
-
-  // useEffect(() => {
-  //   localStorage.setItem("errors", CircularJSON.stringify(localStorageErrors));
-  // }, [localStorageErrors]);
-
-  // console.log("erora", localStorageErrors);
+  // -------------------------------------------------------------------------------
 
   // localStorage configuration
 
@@ -72,9 +73,9 @@ function Multistep() {
     localStorage.setItem("formValues", JSON.stringify(values));
   }, [values]);
 
-  // localStorage configuration
+  // localStorage configuratio
 
-  localStorage.clear();
+  // -------------------------------------------------------------------------------
 
   return (
     <section className="main-section">
@@ -90,6 +91,8 @@ function Multistep() {
           setValues={setValues}
           values={values}
           trigger={trigger}
+          //
+          setSavePhotoValue={setSavePhotoValue}
         />
       )}
       {step === 2 && (
@@ -114,6 +117,10 @@ function Multistep() {
           saveFormId={saveFormId}
           //
           experience={experience}
+          savePhotoValue={savePhotoValue}
+          setResumeInfo={setResumeInfo}
+          //
+          resumeInfo={resumeInfo}
         />
       )}
     </section>

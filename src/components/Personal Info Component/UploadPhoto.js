@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // import assets
 
@@ -11,6 +11,8 @@ function UploadPhoto({
   values,
   trigger,
   errors,
+  //
+  setSavePhotoValue,
 }) {
   // for File Upload validation
 
@@ -24,6 +26,11 @@ function UploadPhoto({
       ...values,
       [e.target.name]: URL.createObjectURL(e.target.files[0]),
     });
+    // save photo in localstorage
+    const file = e.target.files[0];
+    setSavePhotoValue(file);
+    // save photo in localstorage
+
     setValue("fileUpload", e.target.files);
     trigger("fileUpload");
   };
@@ -41,7 +48,7 @@ function UploadPhoto({
         name="fileUpload"
         id="fileUpload"
         {...register("fileUpload", { required: true })}
-        onChange={handleFileChange}
+        onChange={(e) => handleFileChange(e)}
         style={{ display: "none" }}
       />
       <p className="uploadPhoto-title">პირადი ფოტოს ატვირთვა</p>

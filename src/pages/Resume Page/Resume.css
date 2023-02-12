@@ -1,0 +1,244 @@
+.user-resume-section{
+    max-width: 1920px;
+    width: 100%;
+    height:1263px;
+    background-color: var(--white-color);
+    display: flex;
+    justify-content: center;
+}
+
+
+.user-resume-container{
+    padding: 68px 64px 44px 78px;
+    background: #FFFFFF;
+    border: 0.8px solid #000000;
+    margin-top: 54px;
+    height: 1080px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+
+/* personal-info-container */
+
+.personal-info-container{
+    display: flex;
+}
+
+
+.user-fullname-title{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 42px;
+    color: var(--title-color);
+}
+
+.user-email-title , .user-phone-title{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: var(--off-black-color)
+}
+
+.user-social-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 17px;
+}
+
+.userEmail-title-box, .userPhone-title-box{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.userEmail-title-box img , .userPhone-title-box img{
+    Width : 16.67px;
+    height: 16.67px;
+    object-fit: cover;
+}
+
+
+.user-description-container{
+    margin-top: 34px;
+}
+
+
+.about-me-title{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--title-color);
+}
+
+
+.user-description-text{
+    max-width: 432px;
+    width: 100%;
+    display: inline-block;
+    word-wrap: break-word;
+    margin-top: 15px;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    text-transform: lowercase;
+    color: var(--black-color);
+}
+
+
+.user-resume-img{
+    width: 246px;
+    height: 246px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: -20px;
+}
+
+
+
+.personal-info-wrapper::after{
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+    display: inline-block;
+    margin-top: 19px;
+}
+
+
+
+/* User-experience-styles */
+
+/* .experience-container{
+    display: flex;
+    flex-direction: column;
+} */
+
+.experience-card{
+    margin-top: 24px;
+}
+
+.experience-card p{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--title-color);
+}
+
+.skills-box{
+    display: flex;
+    gap: 7px;
+    margin-top: 15px;
+}
+
+.skills-box p{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--off-black-color);
+}
+
+.user-date-box{
+    display: flex;
+}
+
+.user-date-box p{
+    font-family: 'Helvetica Neue';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #919191;
+    margin-top: 7px;
+}
+
+
+.user-description-box p{
+    max-width: 662px;
+    width: 100%;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    text-transform: capitalize;
+    color: var(--black-color);
+    margin-top: 16px;
+}
+
+
+
+.userExperience-container::after{
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+    display: inline-block;
+    margin-top: 32px;
+}
+
+
+
+/* education-styles */
+
+
+
+.education-card{
+    margin-top: 26px;
+}
+
+.education-card p{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--title-color);
+}
+
+
+.skills-box p{
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--off-black-color);
+}
+
+.user-date-box p{
+    font-family: 'Helvetica Neue';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #919191;
+    margin-top: 7px;
+}
+
+
+.user-description-box p{
+    max-width: 662px;
+    width: 100%;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    text-transform: capitalize;
+    color: var(--black-color);
+    margin-top: 16px;
+}
