@@ -1,21 +1,29 @@
-import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Resume.css";
 
 // import assets
 import email from "../../assets/email-icon.png";
 import phone from "../../assets/phone-icon.png";
+import leftArrow from "../../assets/leftArrow.png";
+import logo from "../../assets/logo2.png";
+
+// import components
 import UserEducation from "./UserEducation";
 import UserExperience from "./UserExperience";
+import SuccessMessage from "./SuccessMessage";
 
 function Resume({ resumeInfo }) {
-  useEffect(() => {
-    console.log("resume", resumeInfo);
-  }, [resumeInfo]);
-
   const { educations, experiences } = resumeInfo;
 
   return (
     <section className="user-resume-section">
+      <Link to="/">
+        <div className="left-arrow-box">
+          <img src={leftArrow} alt="arrowIMG" />
+        </div>
+      </Link>
+      <SuccessMessage />
+      {/*  */}
       <div className="user-resume-container">
         <div className="personal-info-wrapper">
           <div className="personal-info-container">
@@ -33,13 +41,14 @@ function Resume({ resumeInfo }) {
                   <p className="user-phone-title">{resumeInfo.phone_number}</p>
                 </div>
               </div>
-              <div className="user-description-container">
-                <h4 className="about-me-title">ჩემ შესახებ</h4>
-                <span className="user-description-text">
-                  ძალიან მიყვარს დიზაინის კეთება. დილით ადრე რომ ავდგები
-                  გამამხნევებელი ვარჯიშების მაგიერ დიზაინს ვაკეთებ.{" "}
-                </span>
-              </div>
+              {resumeInfo.about_me && (
+                <div className="user-description-container">
+                  <h4 className="about-me-title">ჩემ შესახებ</h4>
+                  <span className="user-description-text">
+                    {resumeInfo.about_me}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="personal-info-rightSide">
               <img
@@ -64,6 +73,8 @@ function Resume({ resumeInfo }) {
             return <UserEducation key={education.id} education={education} />;
           })}
         </div>
+        {/*  */}
+        <img src={logo} className="logoIMG" />
       </div>
     </section>
   );

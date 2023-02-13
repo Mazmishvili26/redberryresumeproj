@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // import pages
@@ -9,7 +9,13 @@ import Resume from "./pages/Resume Page/Resume";
 function App() {
   // finnaly state, where if The information returned successfully from the backup fits into this array,
   // which I use to display the information in the last component
-  const [resumeInfo, setResumeInfo] = useState([]);
+  const [resumeInfo, setResumeInfo] = useState(
+    JSON.parse(localStorage.getItem("resumeInfo")) || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("resumeInfo", JSON.stringify(resumeInfo));
+  }, [resumeInfo]);
 
   return (
     <BrowserRouter>

@@ -18,9 +18,6 @@ function InputBox({
   setValues,
   setValue,
   trigger,
-  formId,
-  onChange,
-  sumOfValues,
 }) {
   const [borderColors, setBorderColors] = useState(
     Array(6).fill("1px solid #BCBCBC")
@@ -83,7 +80,6 @@ function InputBox({
     setValue(registerValue, e.target.value);
     // for trigger validation
     trigger(e.target.name);
-    // onChange();
   };
 
   useEffect(() => {

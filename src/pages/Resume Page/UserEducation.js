@@ -1,8 +1,6 @@
 import React from "react";
 
 function UserEducation({ education }) {
-  console.log("edu", education);
-
   const { degree, description, due_date, institute } = education;
 
   return (

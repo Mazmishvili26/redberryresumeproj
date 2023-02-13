@@ -31,8 +31,12 @@ function Multistep({ resumeInfo, setResumeInfo }) {
     watch,
     setValue,
     trigger,
+    setError,
     formState: { errors },
-  } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(schema),
+  });
 
   // -------------------------------------------------------------------------------
 
@@ -58,8 +62,14 @@ function Multistep({ resumeInfo, setResumeInfo }) {
 
   // -------------------------------------------------------------------------------
 
-  // experienceComponent array to send backend
-  const [experience, setExperience] = useState([]);
+  // experienceComponent array to send backend and save localstorage
+  const [experience, setExperience] = useState(
+    JSON.parse(localStorage.getItem("experienceInfo")) || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("experienceInfo", JSON.stringify(experience));
+  }, [experience]);
 
   // -------------------------------------------------------------------------------
 
@@ -73,7 +83,7 @@ function Multistep({ resumeInfo, setResumeInfo }) {
     localStorage.setItem("formValues", JSON.stringify(values));
   }, [values]);
 
-  // localStorage configuratio
+  // localStorage configuration
 
   // -------------------------------------------------------------------------------
 
@@ -91,8 +101,8 @@ function Multistep({ resumeInfo, setResumeInfo }) {
           setValues={setValues}
           values={values}
           trigger={trigger}
-          //
           setSavePhotoValue={setSavePhotoValue}
+          setError={setError}
         />
       )}
       {step === 2 && (
@@ -103,7 +113,6 @@ function Multistep({ resumeInfo, setResumeInfo }) {
           setStep={setStep}
           saveFormId={saveFormId}
           setSaveFormId={setSaveFormId}
-          // setExperience={setExperience}
           experience={experience}
           setExperience={setExperience}
         />
@@ -115,11 +124,9 @@ function Multistep({ resumeInfo, setResumeInfo }) {
           setValues={setValues}
           values={values}
           saveFormId={saveFormId}
-          //
           experience={experience}
           savePhotoValue={savePhotoValue}
           setResumeInfo={setResumeInfo}
-          //
           resumeInfo={resumeInfo}
         />
       )}

@@ -19,7 +19,6 @@ function Experience({
   setStep,
   saveFormId,
   setSaveFormId,
-  addExperience,
   experience,
   setExperience,
 }) {
@@ -53,30 +52,83 @@ function Experience({
     setComponentCount((count) => count + 1);
     setSaveFormId((prevSaveFormId) => [...prevSaveFormId, componentCount]);
     // creating experience Array of objects to send backend
-    setExperience([
-      ...experience,
-      {
-        position: positionValue,
-        employer: employerValue,
-        start_date: startDate,
-        due_date: endDate,
-        description: description,
-      },
-    ]);
+    if (positionValue && employerValue && startDate && endDate && description) {
+      setExperience([
+        ...experience,
+        {
+          position: positionValue,
+          employer: employerValue,
+          start_date: startDate,
+          due_date: endDate,
+          description: description,
+        },
+      ]);
+
+      const newExperience = [
+        ...experience,
+        {
+          position: positionValue,
+          employer: employerValue,
+          start_date: startDate,
+          due_date: endDate,
+          description: description,
+        },
+      ];
+
+      setExperience(
+        newExperience.filter(
+          (edu, index, self) =>
+            self.findIndex(
+              (t) =>
+                t.position === edu.position &&
+                t.employer === edu.employer &&
+                t.start_date === edu.start_date &&
+                t.due_date === edu.due_date &&
+                t.description === edu.description
+            ) === index
+        )
+      );
+    }
   };
 
   const nextPage = (e) => {
     e.preventDefault();
-    setExperience([
-      ...experience,
-      {
-        position: positionValue,
-        employer: employerValue,
-        start_date: startDate,
-        due_date: endDate,
-        description: description,
-      },
-    ]);
+    if (positionValue && employerValue && startDate && endDate && description) {
+      setExperience([
+        ...experience,
+        {
+          position: positionValue,
+          employer: employerValue,
+          start_date: startDate,
+          due_date: endDate,
+          description: description,
+        },
+      ]);
+      const newExperience = [
+        ...experience,
+        {
+          position: positionValue,
+          employer: employerValue,
+          start_date: startDate,
+          due_date: endDate,
+          description: description,
+        },
+      ];
+
+      setExperience(
+        newExperience.filter(
+          (edu, index, self) =>
+            self.findIndex(
+              (t) =>
+                t.position === edu.position &&
+                t.employer === edu.employer &&
+                t.start_date === edu.start_date &&
+                t.due_date === edu.due_date &&
+                t.description === edu.description
+            ) === index
+        )
+      );
+    }
     handleSubmit(() => {
       setStep(step + 1);
     })();
@@ -86,6 +138,12 @@ function Experience({
     localStorage.setItem("componentCount", componentCount);
     localStorage.setItem("experienceFormId", JSON.stringify(saveFormId));
   }, [componentCount, saveFormId]);
+
+  // stepBack function
+
+  const handlePrev = () => {
+    setStep((prevStep) => prevStep - 1);
+  };
 
   return (
     <section
@@ -107,7 +165,6 @@ function Experience({
                 setValues={setValues}
                 defaultValues={{ description: "" }}
                 setSchema={setSchema}
-                //
                 handleSubmit={handleSubmit}
                 watch={watch}
                 errors={errors}
@@ -115,10 +172,7 @@ function Experience({
                 setValue={setValue}
                 trigger={trigger}
                 componentCount={componentCount}
-                //
                 value={values}
-                // experience={experience}
-                // setExperience={setExperience}
               />
             ))}
 
@@ -126,7 +180,9 @@ function Experience({
               მეტი გამოცდილების დამატება
             </button>
             <div className="stepper-btn-container">
-              <button className="prev-btn">უკან</button>
+              <button className="prev-btn" onClick={handlePrev}>
+                უკან
+              </button>
               <button id="next-btn" className="next-btn" onClick={nextPage}>
                 შემდეგი
               </button>
@@ -136,7 +192,12 @@ function Experience({
         <div className="right-side">
           <FirstStepResult step={step} values={values} />
           {Array.from({ length: componentCount }, (_, i) => (
-            <SecondStepResult values={values} formId={i} watch={watch} />
+            <SecondStepResult
+              key={i}
+              values={values}
+              formId={i}
+              watch={watch}
+            />
           ))}
           <img src={logo} className="logo-img" />
         </div>

@@ -139,7 +139,11 @@ function EducationForm({
               </p>
               <img
                 src={vector}
-                className="selectBox-arrow"
+                className={
+                  isSelectboxOpen
+                    ? "selectBox-arrow close-dropdown"
+                    : "selectBox-arrow"
+                }
                 onClick={() => setIsSelectboxOpen(!isSelectboxOpen)}
               />
             </div>

@@ -53,25 +53,61 @@ table {
 	border-spacing: 0;
 }
 
+/* webkit styles */
+
 ::-webkit-scrollbar {
 	width: 2px;
 	height: 5px;
 	background-color: #ccc;
   }
   
-  ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
 	background-color: black;
   }
   
-  ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
 	background-color: black;
   }
+
+input{
+	position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+	opacity: 0;
+	z-index: 9999;
+	cursor: pointer;
+}
+
+input[type="date"]::after{
+	position: absolute;
+	right: 15px;
+	content: '';
+	background-image: url('./assets/date.png');
+	width: 18px;
+	height: 20px;
+	display: block;
+	cursor: pointer;
+}
+
+input[type="date"] {
+	font-family: 'Helvetica Neue';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 21px;
+	color: var(--placeholder-color);
+}
 
 /* global classes */
 
 .container{
 	max-width: 798px;
 	width: 100%;
+}
+
+.main-section{
+	background-color: var(--dark-background);
 }
 
 :root{
@@ -90,4 +126,5 @@ table {
 	--line-color : #C8C8C8;
 	--light-line-color:#C1C1C1;
 	--light-blue : #62A1EB;
+	--btn-hover: #512FAF;
 }

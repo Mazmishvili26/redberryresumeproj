@@ -9,6 +9,19 @@
     margin: auto;
 }
 
+.left-arrow-box{
+    position: absolute;
+    top: 45px;
+    left: 48px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
 
 .multistepHeader-title{
     font-family: 'Helvetica Neue';

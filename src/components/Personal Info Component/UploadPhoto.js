@@ -11,7 +11,6 @@ function UploadPhoto({
   values,
   trigger,
   errors,
-  //
   setSavePhotoValue,
 }) {
   // for File Upload validation

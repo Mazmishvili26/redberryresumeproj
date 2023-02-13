@@ -5,7 +5,7 @@ import "./Result.css";
 import email from "../../assets/email-icon.png";
 import phone from "../../assets/phone-icon.png";
 
-function FirstStepResult({ step, values, formId }) {
+function FirstStepResult({ step, values }) {
   return (
     <section className="result-section">
       <div className={step === 2 || step === 3 ? "userInfo-wrapper" : null}>
@@ -13,12 +13,10 @@ function FirstStepResult({ step, values, formId }) {
           <div>
             {/*  */}
             <div className="userName-title-box">
-              {values?.firstName && (
-                <h4 className="userName-title">{values?.firstName}</h4>
-              )}
-              {values?.lastName && (
-                <h4 className="userName-title">{values?.lastName}</h4>
-              )}
+              <h4 className="userName-title">
+                {values?.firstName ? values?.firstName : null}{" "}
+                {values?.lastName ? values?.lastName : null}
+              </h4>
             </div>
             {/*  */}
             <div className="contactInfo-container">

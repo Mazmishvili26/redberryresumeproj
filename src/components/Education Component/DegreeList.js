@@ -12,14 +12,6 @@ function DegreeList({
 }) {
   const { id, title } = degree;
 
-  // const handleSelectboxValue = (e) => {
-  //   setSelectboxValue((prevState) => ({
-  //     ...prevState,
-  //     [`selectboxValue-${formId}`]: e.target.innerText,
-  //   }));
-  //   setOpenSelectboxDropdown(false);
-  // };
-
   const handleSelectboxValue = (e) => {
     setSelectboxValue(e.target.innerText);
     setIsSelectboxOpen(false);

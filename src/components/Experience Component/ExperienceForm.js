@@ -69,7 +69,7 @@ function ExperienceForm({
   ]);
 
   return (
-    <div className={formId > 0 && "added-experience-box"}>
+    <div className={formId > 0 ? "added-experience-box" : null}>
       <form onSubmit={handleSubmit}>
         <div className="userPosition-box">
           <InputBox

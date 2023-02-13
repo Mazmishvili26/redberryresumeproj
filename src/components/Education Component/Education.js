@@ -25,7 +25,6 @@ function Education({
   experience,
   savePhotoValue,
   setResumeInfo,
-  //
   resumeInfo,
 }) {
   const [schema, setSchema] = useState(null);
@@ -53,10 +52,23 @@ function Education({
 
   // educationComponent state and save to localstorage
 
-  const [degreeId, setDegreeId] = useState(null);
+  // selected degreeIdState and save to localStorage
+  const [degreeId, setDegreeId] = useState(
+    JSON.parse(localStorage.getItem("degreeId")) || null
+  );
 
-  // creating education array of objects
-  const [education, setEducation] = useState([]);
+  useEffect(() => {
+    localStorage.setItem("degreeId", JSON.stringify(degreeId));
+  }, [degreeId]);
+
+  // creating education array of objects and save localstorage
+  const [education, setEducation] = useState(
+    JSON.parse(localStorage.getItem("educationInfo")) || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("educationInfo", JSON.stringify(education));
+  }, [education]);
 
   const educationValue = watch(`education-${educationComponentCount - 1}`);
 
@@ -77,45 +89,59 @@ function Education({
 
   const addForm = () => {
     setEducationComponentCount((count) => count + 1);
-    setEducation([
-      ...education,
-      {
-        degree_id: degreeId,
-        institute: educationValue,
-        degree: selectedOptionValue,
-        due_date: educationDateValue,
-        description: educationDescriptionValue,
-      },
-    ]);
+    if (
+      educationValue &&
+      selectedOptionValue &&
+      educationDateValue &&
+      educationDescriptionValue
+    ) {
+      setEducation([
+        ...education,
+        {
+          degree_id: degreeId,
+          institute: educationValue,
+          degree: selectedOptionValue,
+          due_date: educationDateValue,
+          description: educationDescriptionValue,
+        },
+      ]);
+    }
   };
 
   // submit
   const nextPage = (e) => {
     e.preventDefault();
 
-    const newEducation = [
-      ...education,
-      {
-        degree_id: degreeId,
-        institute: educationValue,
-        degree: selectedOptionValue,
-        due_date: educationDateValue,
-        description: educationDescriptionValue,
-      },
-    ];
-    // filter to avoid same object add in array
-    setEducation(
-      newEducation.filter(
-        (edu, index, self) =>
-          self.findIndex(
-            (t) =>
-              t.institute === edu.institute &&
-              t.degree === edu.degree &&
-              t.due_date === edu.due_date &&
-              t.description === edu.description
-          ) === index
-      )
-    );
+    if (
+      educationValue &&
+      selectedOptionValue &&
+      educationDateValue &&
+      educationDescriptionValue
+    ) {
+      const newEducation = [
+        ...education,
+        {
+          degree_id: degreeId,
+          institute: educationValue,
+          degree: selectedOptionValue,
+          due_date: educationDateValue,
+          description: educationDescriptionValue,
+        },
+      ];
+      // filter to avoid same object add in array
+      setEducation(
+        newEducation.filter(
+          (edu, index, self) =>
+            self.findIndex(
+              (t) =>
+                t.institute === edu.institute &&
+                t.degree === edu.degree &&
+                t.due_date === edu.due_date &&
+                t.description === edu.description
+            ) === index
+        )
+      );
+    }
 
     setSubmitted(true);
   };
@@ -126,36 +152,46 @@ function Education({
   useEffect(() => {
     if (!submitted) return;
 
+    let postBody = {
+      name: values.firstName,
+      surname: values.lastName,
+      email: values.email,
+      phone_number: values.phoneNumber,
+      experiences: experience,
+      educations: education,
+      image: savePhotoValue,
+    };
+
+    if (values.aboutMe) {
+      postBody.about_me = values.aboutMe;
+    }
+
     axios
-      .post(
-        "https://resume.redberryinternship.ge/api/cvs",
-        {
-          name: values.firstName,
-          surname: values.lastName,
-          email: values.email,
-          phone_number: values.phoneNumber,
-          experiences: experience,
-          educations: education,
-          image: savePhotoValue,
+      .post("https://resume.redberryinternship.ge/api/cvs", postBody, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+      })
       .then((resp) => {
         setTimeout(() => {
-          console.log(resp.data); // log the data to check if it contains what you expect
           setResumeInfo(resp.data);
         }, 0);
         navigate("/userResume");
         localStorage.clear();
         localforage.clear();
       })
-      .catch((err) => alert("წარუმატებელი მცდელობა მიზეზი" + err));
+      .catch((err) => {
+        alert("წარუმატებელი მცდელობა მიზეზი" + err);
+        console.log(err);
+      });
     setSubmitted(false);
   }, [submitted, experience, education, values, resumeInfo]);
+
+  // stepBack function
+
+  const handlePrev = () => {
+    setStep((prevStep) => prevStep - 1);
+  };
 
   return (
     <section
@@ -189,7 +225,9 @@ function Education({
               სხვა სასწავლებლის დამატება
             </button>
             <div className="stepper-btn-container">
-              <button className="prev-btn">უკან</button>
+              <button className="prev-btn" onClick={handlePrev}>
+                უკან
+              </button>
               <button
                 type="submit"
                 id="next-btn"
@@ -203,11 +241,15 @@ function Education({
         </div>
         <div className="right-side">
           <FirstStepResult step={step} values={values} />
-          {saveFormId.map((formIdValue) => (
-            <SecondStepResult values={values} formId={formIdValue} />
+          {saveFormId.map((formIdValue, Index) => (
+            <SecondStepResult
+              key={Index}
+              values={values}
+              formId={formIdValue}
+            />
           ))}
           {Array.from({ length: educationComponentCount }, (_, i) => (
-            <ThirdStepResult values={values} formId={i} />
+            <ThirdStepResult key={i} values={values} formId={i} />
           ))}
           <img src={logo} className="logo-img" />
         </div>

@@ -12,11 +12,10 @@
 }
 
 .userName-title-box{
-    max-width: 400px;
-    width: 100%;
+    width: 400px;
     display: flex;
-    flex-wrap: wrap;
     gap: 20px;
+    word-wrap: break-word;
 }
 
 .userName-title{
@@ -26,6 +25,8 @@
     font-size: 34px;
     line-height: 42px;
     color: var(--title-color);
+    width: 100%;
+    word-wrap: break-word;
 }
 
 .contactInfo-container{
@@ -127,6 +128,10 @@
     align-items: center;
     margin-top: 15px;
     gap: 7px;
+    max-width: 662px;
+    width: 100%;
+    word-wrap: break-word;
+    flex-wrap: wrap;
 }
 
 
@@ -137,6 +142,9 @@
     font-size: 16px;
     line-height: 20px;
     color: var(--black-color);
+    word-wrap: break-word;
+    display: flex;
+    gap: 7px;
 }
 
 

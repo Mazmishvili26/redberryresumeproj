@@ -21,8 +21,8 @@ function PersonalInfo({
   values,
   setValues,
   trigger,
-  //
   setSavePhotoValue,
+  setError,
 }) {
   const nextPage = (e) => {
     e.preventDefault();
@@ -52,6 +52,7 @@ function PersonalInfo({
                 values={values}
                 setValues={setValues}
                 trigger={trigger}
+                setError={setError}
               />
               <InputBox
                 labelTitle="გვარი"
@@ -78,7 +79,6 @@ function PersonalInfo({
                 setValue={setValue}
                 trigger={trigger}
                 errors={errors}
-                //
                 setSavePhotoValue={setSavePhotoValue}
               />
             </div>
